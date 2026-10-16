@@ -1,0 +1,23 @@
+# Cascade stage 2: high-resolution model trained only on the liver region.
+# Spending all capacity and resolution on the liver mainly helps small tumours.
+# Predict with:  liverseg-predict scan.nii.gz --locator outputs/lits_3d_lowres --model outputs/lits_3d_roi
+experiment: lits_3d_roi
+data:
+  raw_dir: data/raw
+  preprocessed_dir: data/preprocessed/3d_roi
+  format: lits
+  target_spacing: [1.0, 0.7, 0.7]
+  roi_crop: true
+  roi_margin_mm: [15.0, 20.0, 20.0]
+model:
+  name: resunet
+  dims: 3
+  base_filters: 32
+  n_stages: 6
+  blocks_per_stage: [1, 2, 2, 3, 3, 3]
+  attention_gates: true
+train:
+  patch_size: [64, 192, 192]
+  batch_size: 2
+  epochs: 600
+  tumor_oversample: 0.7

@@ -1,0 +1,20 @@
+# Cascade stage 1 ("locator"): fast low-resolution model whose only job is to
+# find the liver. Its output defines the crop for stage 2 (lits_3d_roi.yaml).
+experiment: lits_3d_lowres
+data:
+  raw_dir: data/raw
+  preprocessed_dir: data/preprocessed/3d_lowres
+  format: lits
+  target_spacing: [3.0, 2.0, 2.0]
+model:
+  name: resunet
+  dims: 3
+  base_filters: 32
+  n_stages: 5
+  blocks_per_stage: [1, 2, 2, 2, 2]
+train:
+  patch_size: [64, 160, 160]
+  batch_size: 2
+  epochs: 300
+inference:
+  tta: false

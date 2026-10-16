@@ -1,0 +1,20 @@
+# Main model: 3D residual U-Net on whole LiTS volumes at ~0.8 mm in-plane.
+# Needs a GPU with >= 12 GB (reduce patch_size / base_filters if smaller).
+experiment: lits_3d_fullres
+data:
+  raw_dir: data/raw
+  preprocessed_dir: data/preprocessed/3d_fullres
+  format: lits
+  target_spacing: [1.5, 0.8, 0.8]
+model:
+  name: resunet
+  dims: 3
+  base_filters: 32
+  n_stages: 5
+  blocks_per_stage: [1, 2, 2, 2, 2]
+  deep_supervision: true
+train:
+  patch_size: [80, 160, 160]
+  batch_size: 2
+  epochs: 500
+  iters_per_epoch: 250

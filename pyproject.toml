@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "liverseg"
+version = "2.0.0"
+description = "Liver and liver-tumor segmentation from CT (3D/2D residual U-Net, cascade, ensembling, clinical reporting)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.3",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "SimpleITK>=2.2",
+    "pyyaml>=6.0",
+    "tqdm>=4.65",
+    "matplotlib>=3.7",
+    "pandas>=1.5",
+    "pillow>=9.0",
+]
+
+[project.optional-dependencies]
+monai = ["monai>=1.3"]
+app = ["gradio>=4.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+liverseg-preprocess = "liverseg.preprocessing:main"
+liverseg-train = "liverseg.train:main"
+liverseg-predict = "liverseg.predict:main"
+liverseg-evaluate = "liverseg.evaluate:main"
+liverseg-synthetic = "liverseg.synthetic:main"
+
+[tool.setuptools.packages.find]
+include = ["liverseg*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

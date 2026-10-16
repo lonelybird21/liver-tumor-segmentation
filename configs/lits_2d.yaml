@@ -1,0 +1,26 @@
+# 2.5D slice model: each axial slice + 2 neighbours on each side as channels.
+# Use context_slices: 0 if you want to segment single slices / pictures
+# (a single PNG has no neighbouring slices).
+experiment: lits_2d
+data:
+  raw_dir: data/raw
+  preprocessed_dir: data/preprocessed/2d
+  format: lits
+  target_spacing: [null, 0.8, 0.8]
+model:
+  name: resunet
+  dims: 2
+  context_slices: 0
+  base_filters: 32
+  max_filters: 512
+  n_stages: 7
+  blocks_per_stage: [1, 2, 2, 2, 2, 2, 2]
+train:
+  patch_size: [1, 448, 448]
+  batch_size: 12
+  epochs: 300
+  augmentation:
+    mirror_axes: [1, 2]
+    rotation_deg: [0.0, 0.0, 20.0]
+inference:
+  batch_size: 8

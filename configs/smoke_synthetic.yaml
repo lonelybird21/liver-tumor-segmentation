@@ -1,0 +1,28 @@
+# CPU-sized config for synthetic phantoms (CI / pipeline check only).
+experiment: smoke_synthetic
+data:
+  raw_dir: data/synthetic
+  preprocessed_dir: data/preprocessed/smoke
+  format: lits
+  target_spacing: [3.0, 2.0, 2.0]
+  num_folds: 2
+  test_fraction: 0.25
+model:
+  name: resunet
+  dims: 3
+  base_filters: 8
+  max_filters: 64
+  n_stages: 4
+  blocks_per_stage: [1, 1, 1, 1]
+train:
+  patch_size: [24, 48, 48]
+  batch_size: 2
+  epochs: 100
+  iters_per_epoch: 25
+  num_workers: 0
+  val_every: 10
+  lr: 0.01
+  amp: false
+inference:
+  tta: false
+  overlap: 0.25
